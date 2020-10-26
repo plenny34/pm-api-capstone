@@ -1,16 +1,12 @@
 const express = require('express');
+const controller = require('../controllers/policyController')();
 const policyRouter = express.Router();
 
-policyRouter.get('/', (req, res) => {
-  res.json({ message: 'Hitting the get' });
-});
+const { createPolicy, getPolicies } = controller;
 
-policyRouter.post('/', (req, res) => {
-  res.json({
-    message: 'Using the router',
-    requestBody: req.body
-  });
-});
+policyRouter.get('/', getPolicies);
+
+policyRouter.post('/', createPolicy);
 
 module.exports = policyRouter;
 
