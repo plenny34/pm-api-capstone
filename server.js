@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const policyRouter = require('./routes/policyRouter');
 
 const app = express();
 
@@ -16,9 +17,7 @@ app.get('/', (req, res) => {
   res.json('You hit the server');
 });
 
-app.post('/api/policies', (req, res) =>{
-  res.json('Postmates');
-});
+app.use('/api/policies', policyRouter);
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
