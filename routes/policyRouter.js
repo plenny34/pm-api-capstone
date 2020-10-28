@@ -1,10 +1,29 @@
 const express = require('express');
 const controller = require('../controllers/policyController');
-const policyRouter = express.Router();
 
-policyRouter.post('/', controller.create_policy_post);
+const router = () => {
+  const policyRouter = express.Router();
 
-module.exports = policyRouter;
+  const {
+    getAllPolicies,
+    getPolicyById,
+    addNewPolicy,
+    updatePolicyById,
+    deleteAllPolicies,
+    deletePolicyById
+  } = controller();
+
+  policyRouter.post('/', addNewPolicy);
+  policyRouter.put('/:id', updatePolicyById);
+  policyRouter.get('/', getAllPolicies);
+  policyRouter.get('/:id', getPolicyById);
+  policyRouter.delete('/:id', deletePolicyById);
+  policyRouter.delete('/', deleteAllPolicies);
+
+  return policyRouter;
+}
+
+module.exports = router;
 
 
 
@@ -14,7 +33,6 @@ module.exports = policyRouter;
 
 // const { createPolicy, getPolicies } = controller;
 
-// policyRouter.get('/', getPolicies);
 
 // const router = () => {
 //   policyRouter.route('/').post((req, res) => {

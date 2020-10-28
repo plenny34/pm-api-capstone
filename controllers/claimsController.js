@@ -1,4 +1,4 @@
-const Policy = require('../models/policy');
+const Claim = require('../models/claim');
 const mongoose = require('mongoose');
 
 async function connectToDb() {
@@ -8,11 +8,11 @@ async function connectToDb() {
 }
 
 const controller = () => {
-  const getAllPolicies = (req, res) => {
+  const getAllClaims = (req, res) => {
     (async function () {
         const connection = await connectToDb();
 
-        Policy.find({})
+        Claim.find({})
           .then(data => {
             res.status(200).json(data);
           })
@@ -22,16 +22,16 @@ const controller = () => {
           .finally(() => {
             connection.close();
           });
-      }()
+     }()
     );
-  };
+  }
 
-  const getPolicyById = (req, res) => {
+  const getClaimById = (req, res) => {
     (async function () {
         const connection = await connectToDb();
 
         const id = req.params.id;
-        Policy.findById(id)
+        Claim.findById(id)
           .then(data => {
             res.status(200).json(data);
           })
@@ -45,35 +45,31 @@ const controller = () => {
     );
   }
 
-  const addNewPolicy = (req, res) => {
-    if (!req.body.name) {
-      res.status(400).send('You must provide a name field');
-    } else {
-      (async function () {
-          const connection = await connectToDb();
-          const policy = new Policy(req.body);
-          policy.save()
-            .then(data => {
-              res.status(200).json(data);
-            })
-            .catch(err => {
-              res.status(400).json({message: "Failure to create policy"})
-            })
-            .finally(() => {
-              connection.close();
-            });
-        }()
-      );
-    }
+  const addNewClaim = (req, res) => {
+    (async function () {
+        const connection = await connectToDb();
 
-  };
+        const claim = new Claim(req.body);
+        claim.save()
+          .then(data => {
+            res.status(200).json(data);
+          })
+          .catch(err => {
+            res.status(400).json({message: "Failure to create policy"})
+          })
+          .finally(() => {
+            connection.close();
+          });
+      }()
+    );
+  }
 
-  const updatePolicyById = (req, res) => {
+  const updateClaimById = (req, res) => {
     (async function () {
         const connection = await connectToDb();
 
         const id = req.params.id;
-        Policy.updateOne({_id: id}, req.body)
+        Claim.updateOne({_id: id}, req.body)
           .then(data => {
             res.status(200).json(data);
           })
@@ -87,12 +83,12 @@ const controller = () => {
     );
   }
 
-  const deletePolicyById = (req, res) => {
+  const deleteClaimById = (req, res) => {
     (async function () {
         const connection = await connectToDb();
 
         const id = req.params.id;
-        Policy.deleteOne({_id: id})
+        Claim.deleteOne({_id: id})
           .then(data => {
             res.status(200).json(data);
           })
@@ -106,11 +102,11 @@ const controller = () => {
     );
   }
 
-  const deleteAllPolicies = (req, res) => {
+  const deleteAllClaims = (req, res) => {
     (async function () {
         const connection = await connectToDb();
 
-        Policy.deleteMany({})
+        Claim.deleteMany({})
           .then(data => {
             res.status(200).json(data);
           })
@@ -125,13 +121,14 @@ const controller = () => {
   }
 
   return {
-    getAllPolicies,
-    getPolicyById,
-    addNewPolicy,
-    updatePolicyById,
-    deletePolicyById,
-    deleteAllPolicies
+    getAllClaims,
+    getClaimById,
+    addNewClaim,
+    updateClaimById,
+    deleteClaimById,
+    deleteAllClaims
   }
 }
 
 module.exports = controller;
+

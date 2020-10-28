@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const policyRouter = require('./routes/policyRouter');
+const policyRouter = require('./routes/policyRouter')();
+const claimsRouter = require('./routes/claimsRouter')();
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/policies', policyRouter);
+app.use('/api/claims', claimsRouter);
 
 const PORT = process.env.PORT || 4000
 app.listen(PORT, () => {
