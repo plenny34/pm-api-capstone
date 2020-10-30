@@ -6,11 +6,12 @@ const claimsRouter = require('./routes/claimsRouter')();
 
 const app = express();
 
-// const corsOptions = {
-//   origin: 'http://localhost:{PORT}'
-// };
-//
-// app.use(cors(corsOptions));
+const corsOptions = {
+  origin: 'http://localhost:3000'
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
